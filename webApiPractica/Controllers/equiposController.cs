@@ -10,7 +10,7 @@ namespace webApiPractica.Controllers
     public class equiposController : ControllerBase
     {
         private readonly equiposContext _equiposContexto;
-        
+
         public equiposController(equiposContext equiposContexto)
 
         {
@@ -41,7 +41,7 @@ namespace webApiPractica.Controllers
         public IActionResult Get(int id)
         {
             equipos? equipo =(from e in _equiposContexto.equipos
-                              where e.id_equipos = id
+                              where e.id_equipos == id
                               select e).FirstOrDefault();
             if (equipo == null)
             {
@@ -88,7 +88,7 @@ namespace webApiPractica.Controllers
         public IActionResult ActualizarEquipo(int id, [FromBody] equipos equipoModificar) 
         {
             equipos? equipoActual = (from e in _equiposContexto.equipos
-                                     where e.id_equipos = id
+                                     where e.id_equipos == id
                                      select e).FirstOrDefault();
             if(equipoActual == null)
             {
