@@ -97,10 +97,10 @@ namespace webApiPractica.Controllers
 
             equipoActual.nombre = equipoModificar.nombre;
             equipoActual.descripcion = equipoModificar.descripcion;
-            equipoActual.marca_id = equipoModificar.marca_id;
+            //equipoActual.marca_id = equipoModificar.marca_id;
             equipoActual.tipo_equipo_id = equipoModificar.tipo_equipo_id;
-            equipoActual.anio_compra = equipoModificar.anio_compra;
-            equipoActual.costo = equipoModificar.costo;
+            //equipoActual.anio_compra = equipoModificar.anio_compra;
+            //equipoActual.costo = equipoModificar.costo;
 
             _equiposContexto.Entry(equipoActual).State = EntityState.Modified;
             _equiposContexto.SaveChanges();
