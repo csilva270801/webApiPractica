@@ -20,18 +20,28 @@ namespace webApiPractica.Controllers
         //Retorna el listado de todos los equipos existentes
 
         [HttpGet]
-        [Route("GetAll")]
-        public IActionResult Get()
+        [Route("getbyid/{id}")]
+        public IActionResult GetById(int Id)
         {
-            List<equipos> listadoEquipo = (from e in _equiposContexto.equipos
-                                           select e).ToList();
+            var equipo = (from e in _equiposContexto.equipos
+                                join m in _equiposContexto.marcas on e.marca_id equals m.id_marcas
+                                join te in _equiposContexto.tipo_Equipos on e.tipo_equipo_id equals te.id_tipo_equipo
+                                where e.id_equipos == Id
+                                select new
+                                {
+                                    e.id_equipos,
+                                    e.nombre,
+                                    e.descripcion,
+                                    e.tipo_equipo_id,
+                                    tipo_descripcion = te.descripcion,
+                                    e.marca_id,
+                                    m.nombre_marca,
+                                    descripcion_equipo = ("Marca: "+ m.nombre_marca + "tipo: " + te.descripcion)
+                                }
+                            ).FirstOrDefault();
+            if (equipo == null) return NotFound();
+            return Ok(equipo);
 
-            if (listadoEquipo.Count() == 0)
-            {
-                return NotFound();
-            }
-
-            return Ok(listadoEquipo);
         }
 
         //Retorna los registros de una tabla filtrados por su ID
@@ -124,7 +134,5 @@ namespace webApiPractica.Controllers
 
             return Ok(equipo);
         }
-        
-
     }
 }
